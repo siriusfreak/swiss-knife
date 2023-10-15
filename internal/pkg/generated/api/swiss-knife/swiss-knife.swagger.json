@@ -1,0 +1,446 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "swiss-knife.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "SwissKnife"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/github/events": {
+      "get": {
+        "operationId": "SwissKnife_GetGithubEvents",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/swissknifeGetGithubEventsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "repo",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "startTimestamp",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "endTimestamp",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SwissKnife"
+        ]
+      }
+    },
+    "/api/v1/github/events/cache": {
+      "post": {
+        "operationId": "SwissKnife_CacheGithubEvents",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/swissknifeCacheGithubEventsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/swissknifeCacheGithubEventsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "SwissKnife"
+        ]
+      }
+    },
+    "/api/v1/jira/saved-jql": {
+      "get": {
+        "operationId": "SwissKnife_GetSavedJQL",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/swissknifeGetSavedJQLResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "SwissKnife"
+        ]
+      },
+      "post": {
+        "operationId": "SwissKnife_SaveJQL",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/swissknifeSaveJQLResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/swissknifeSaveJQLRequest"
+            }
+          }
+        ],
+        "tags": [
+          "SwissKnife"
+        ]
+      }
+    },
+    "/api/v1/jira/saved-jql/{id}": {
+      "delete": {
+        "operationId": "SwissKnife_DeleteSavedJQL",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/swissknifeDeleteSavedJQLResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "SwissKnife"
+        ]
+      }
+    },
+    "/api/v1/jira/tasks": {
+      "get": {
+        "operationId": "SwissKnife_GetJIRATasks",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/swissknifeGetJIRATasksResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "jql",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "SwissKnife"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "swissknifeCacheGithubEventsRequest": {
+      "type": "object",
+      "properties": {
+        "owner": {
+          "type": "string"
+        },
+        "repo": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "swissknifeCacheGithubEventsResponse": {
+      "type": "object"
+    },
+    "swissknifeDeleteSavedJQLResponse": {
+      "type": "object"
+    },
+    "swissknifeGetGithubEventsResponse": {
+      "type": "object",
+      "properties": {
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/swissknifeGithubEvent"
+          }
+        }
+      }
+    },
+    "swissknifeGetJIRATasksResponse": {
+      "type": "object",
+      "properties": {
+        "tasks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/swissknifeJIRATask"
+          }
+        }
+      }
+    },
+    "swissknifeGetSavedJQLResponse": {
+      "type": "object",
+      "properties": {
+        "savedJQL": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/swissknifeSavedJQL"
+          }
+        }
+      }
+    },
+    "swissknifeGithubEvent": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "type": {
+          "type": "string"
+        },
+        "repo": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "payload": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "int64"
+        },
+        "user": {
+          "type": "string"
+        }
+      }
+    },
+    "swissknifeJIRAFieldInOutwardIssue": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        }
+      }
+    },
+    "swissknifeJIRAFieldIssueLink": {
+      "type": "object",
+      "properties": {
+        "inwardIssue": {
+          "$ref": "#/definitions/swissknifeJIRAFieldInOutwardIssue"
+        },
+        "outwardIssue": {
+          "$ref": "#/definitions/swissknifeJIRAFieldInOutwardIssue"
+        },
+        "type": {
+          "$ref": "#/definitions/swissknifeJIRAFieldIssueType"
+        }
+      }
+    },
+    "swissknifeJIRAFieldIssueType": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "swissknifeJIRAFieldParent": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        }
+      }
+    },
+    "swissknifeJIRAFieldStatus": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "swissknifeJIRATask": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "fields": {
+          "$ref": "#/definitions/swissknifeJIRATaskFields"
+        }
+      }
+    },
+    "swissknifeJIRATaskFields": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/swissknifeJIRAFieldStatus"
+        },
+        "epicKey": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "parent": {
+          "$ref": "#/definitions/swissknifeJIRAFieldParent"
+        },
+        "issueLinks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/swissknifeJIRAFieldIssueLink"
+          }
+        },
+        "issueType": {
+          "$ref": "#/definitions/swissknifeJIRAFieldIssueType"
+        }
+      }
+    },
+    "swissknifeSaveJQLRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "jql": {
+          "type": "string"
+        }
+      }
+    },
+    "swissknifeSaveJQLResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "swissknifeSavedJQL": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "jql": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

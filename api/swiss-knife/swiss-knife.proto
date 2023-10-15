@@ -1,0 +1,146 @@
+syntax = "proto3";
+
+option go_package = "github.com/siriusfreak/swiss-knife/internal/pkg/generated/api/swiss-knife;swissknife";
+
+package swissknife;
+
+import "google/api/annotations.proto";
+
+service SwissKnife {
+    rpc GetJIRATasks(GetJIRATasksRequest) returns (GetJIRATasksResponse) {
+      option (google.api.http) = {
+        get: "/api/v1/jira/tasks"
+      };
+    }
+    rpc GetSavedJQL(GetSavedJQLRequest) returns (GetSavedJQLResponse) {
+      option (google.api.http) = {
+        get: "/api/v1/jira/saved-jql"
+      };
+    }
+    rpc DeleteSavedJQL(DeleteSavedJQLRequest) returns (DeleteSavedJQLResponse) {
+      option (google.api.http) = {
+        delete: "/api/v1/jira/saved-jql/{id}"
+      };
+    }
+    rpc SaveJQL(SaveJQLRequest) returns (SaveJQLResponse) {
+      option (google.api.http) = {
+        post: "/api/v1/jira/saved-jql"
+        body: "*"
+      };
+    }
+    rpc CacheGithubEvents(CacheGithubEventsRequest) returns (CacheGithubEventsResponse) {
+      option (google.api.http) = {
+        post: "/api/v1/github/events/cache"
+        body: "*"
+      };
+    }
+    rpc GetGithubEvents(GetGithubEventsRequest) returns (GetGithubEventsResponse) {
+      option (google.api.http) = {
+        get: "/api/v1/github/events"
+      };
+    }
+}
+
+message GetGithubEventsRequest {
+  string owner = 1;
+  string repo = 2;
+  int64  startTimestamp = 3;
+  int64  endTimestamp = 4;
+}
+
+message GetGithubEventsResponse {
+  repeated GithubEvent events = 1;
+}
+
+message GithubEvent {
+  int64 id = 1;
+  string type = 2;
+  string repo = 3;
+  string owner = 4;
+  string payload = 5;
+  int64 timestamp = 6;
+  string user = 7;
+}
+
+
+message CacheGithubEventsRequest {
+  string owner = 1;
+  string repo = 2;
+  int64 limit = 3;
+}
+
+message CacheGithubEventsResponse {
+}
+
+message GetJIRATasksRequest {
+    string jql = 1;
+}
+
+message GetJIRATasksResponse {
+    repeated JIRATask tasks = 1;
+}
+
+message JIRAFieldStatus {
+  string name = 1;
+}
+
+message JIRAFieldParent {
+  string key = 1;
+}
+
+message JIRAFieldIssueType {
+  string name = 1;
+}
+
+message JIRAFieldInOutwardIssue {
+  string key = 1;
+}
+
+message JIRAFieldIssueLink {
+  JIRAFieldInOutwardIssue inwardIssue = 1;
+  JIRAFieldInOutwardIssue outwardIssue = 2;
+  JIRAFieldIssueType type = 3;
+}
+
+message JIRATaskFields {
+  JIRAFieldStatus status = 1;
+  string epicKey = 2;
+  string summary = 3;
+  JIRAFieldParent parent = 4;
+  repeated JIRAFieldIssueLink issueLinks = 5;
+  JIRAFieldIssueType issueType = 6;
+}
+
+message JIRATask {
+  string key = 1;
+  JIRATaskFields fields = 2;
+}
+
+message GetSavedJQLRequest {
+}
+
+message GetSavedJQLResponse {
+  repeated SavedJQL savedJQL = 1;
+}
+
+message SavedJQL {
+  string id = 1;
+  string name = 2;
+  string jql = 3;
+}
+
+message DeleteSavedJQLRequest {
+  string id = 1;
+}
+
+message DeleteSavedJQLResponse {
+}
+
+message SaveJQLRequest {
+  string name = 1;
+  string jql = 2;
+}
+
+message SaveJQLResponse {
+  string id = 1;
+}
