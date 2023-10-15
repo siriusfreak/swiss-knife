@@ -1,0 +1,6 @@
+.idea
+bin
+data
+deploy/config.yaml
+deploy/backend-config.tfvars
+.DS_Store
