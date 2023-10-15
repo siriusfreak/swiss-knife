@@ -4,3 +4,4 @@ data
 deploy/config.yaml
 deploy/backend-config.tfvars
 .DS_Store
+/deploy/.terraform/terraform.tfstate
